@@ -1,0 +1,10 @@
+Package: s525
+Type: Package
+Title: Implementation of common Bayesian models
+Version: 1.0
+Date: 2017-11-26
+Author: Daniel Bourgeois
+Maintainer: Daniel Bourgeois <dcb10@rice.edu>
+Description: This package contains implementations of common Bayesian models.
+Imports: truncdist, MASS, coda
+License: MIT License
