@@ -1,4 +1,5 @@
 exportPattern("^[[:alpha:]]+")
+importFrom(truncnorm, rtruncnorm)
 importFrom(truncdist, rtrunc)
 importFrom(coda, as.mcmc)
 importFrom(coda, HPDinterval)

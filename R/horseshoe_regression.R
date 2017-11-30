@@ -16,6 +16,7 @@ horseshoe_regression <- function(
   etas <- rgamma(p, shape = 1/2, rate = gammas)
   betas <- mvrnorm(1, rep(0, p), Sigma = 1/tau*diag(1/etas))
 
+  # TODO why have all these?
   post_betas <- array(0, c(chain_length, p))
   post_etas <- array(0, c(chain_length, p))
   post_tau <- array(0, c(chain_length,1))

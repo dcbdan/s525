@@ -18,23 +18,28 @@
   The full conditional distributions are given by
   \deqn{[\beta|y, y^*, X] \sim N(Q^{-1}l, Q^{-1})}
   where \eqn{Q = X^tX + A^{-2}I} and \eqn{l = X^ty^*},
-  \deqn{[y_i|y_i^*, \beta, X] \sim sgn(y_i, y_i^*)N(x_i^t\beta, 1)}
+  \deqn{[y_i^*|y_i, \beta, X] \sim sgn(y_i, y_i^*)N(x_i^t\beta, 1)}
   where \eqn{sqn} is 1 if both arguments are of the same sign and zero otherwise.
 
+  If A is a vector, \eqn{Q = X^tX + diag(A)}. A flat prior on the intercept
+  at position 1 is thus given by A = c(Inf, rep(3, p)).
 }
 \usage{
 probit_regression <- function(
   Y,
   X,
   niter,
-  A = 3)
+  A = 3,
+  init = NULL)
 }
 \arguments{
   \item{Y}{n by 1 vector of ones and zeros}
   \item{X}{n by p predictor matrix}
   \item{niter}{number of gibbs sampling iterations}
   \item{A}{A parameter. The default value is chosen to provide a reasonable
-    range of \eqn{\pi}.}
+    range of \eqn{\pi}. If A is a vector, then different variances are given for
+    each intercept. }
+  \item{init}{Initial starting values for beta. If NULL, beta is set to zero.}
 }
 \details{
   This function returns a niter x p matrix of values where p is the second dimension
