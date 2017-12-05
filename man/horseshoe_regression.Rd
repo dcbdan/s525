@@ -60,7 +60,7 @@ horseshoe_regression <- function(
 \examples{
 # Load the data
  prostate.data = "https://web.stanford.edu/~hastie/ElemStatLearn/datasets/prostate.data"
-prostate = read.table(file = "prostate.data", sep="", header = TRUE)
+prostate = read.table(file = prostate.data, sep="", header = TRUE)
 # Training data:
 prostate_train = prostate[which(prostate$train),-10]
 # Testing data:

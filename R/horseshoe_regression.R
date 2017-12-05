@@ -27,10 +27,16 @@ horseshoe_regression <- function(
     etas = rexp(p, tau*betas^2/2 + gammas)
 
     Lam <- diag(etas)
-    Qi <- solve(XTX + Lam)
-    mu <- Qi %*% XTY
-    Sig <- 1/tau * Qi
-    betas = mvrnorm(1, mu = mu, Sigma = Sig)
+    #Qi <- solve(XTX + Lam)
+    #mu <- Qi %*% XTY
+    #Sig <- 1/tau * Qi
+    #betas = mvrnorm(1, mu = mu, Sigma = Sig)
+    betas = sqrt(1/tau) *
+      rpost_regression_coef(
+        X,
+        Lam,
+        Y,
+        u = rnorm(p, sd = sqrt(Lam)))
 
     gammas = rexp(p, etas + tau_a)
 
