@@ -4,6 +4,16 @@ rpost_regression_coef <- function(
   alpha,
   u = NULL)
 {
+  if(!is.matrix(X))
+  {
+    X = as.matrix(X)
+  }
+
+  if(!is.matrix(D))
+  {
+    D = as.matrix(D)
+  }
+
   n <- nrow(X)
   p <- ncol(X)
 
