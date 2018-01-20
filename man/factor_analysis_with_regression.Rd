@@ -40,7 +40,7 @@ factor_analysis_with_regression <- function(
   \item{nonzero_structure}{A boolean p x k matrix. If the i, jth spot is TRUE,
     then \eqn{\lambda_{ij}} is free. If the i, jth spot is FALSE, then
     \eqn{\lambda_{ij}} is zero. If not set, then a lower triangular matrix
-    is used.
+    is used.}
 }
 \value{
   \item{alpha}{An niter x p matrix of posterior values}

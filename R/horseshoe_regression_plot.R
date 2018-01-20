@@ -5,7 +5,7 @@ horseshoe_regression_plot <- function(
   main = "Horseshoe Prior",
   ylim = NULL)
 {
-  mod_ols = lm(y ~ X - 1)
+  mod_ols = lm(Y ~ X - 1)
   summary(mod_ols)
 
   p <- length(X[1,])
