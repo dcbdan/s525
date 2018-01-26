@@ -6,7 +6,8 @@ factor_infinite <- function(
   b_sig = 1,
   rho = 3,
   a1 = 1,
-  a2 = 3)
+  a2 = 3,
+  prt = FALSE)
 {
   n <- nrow(Y)
   p <- ncol(Y)
@@ -29,6 +30,7 @@ factor_infinite <- function(
   # return values
   post_lam <- array(dim = c(niter, p, k))
   post_s2g <- array(dim = c(niter, p))
+  post_eta <- array(dim = c(niter, n, k))
 
   # run the gibbs sampler
   for(iteration in 1:niter)
@@ -89,9 +91,16 @@ factor_infinite <- function(
     # store lam and s2g
     post_lam[iteration,,] = lam
     post_s2g[iteration,] = s2g
+    post_eta[iteration,,] = eta
+
+    if(prt)
+    {
+      print(iteration)
+    }
   }
 
   return(list(
     sigma2 = post_s2g,
-    lambda = post_lam))
+    lambda = post_lam,
+    eta = post_eta))
 }
