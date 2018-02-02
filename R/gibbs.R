@@ -7,19 +7,44 @@ gibbs <- function(
                         #  A list of functions with names corresponding to
                         #  init. known_data is fed into each function as well.
   iter_argname = "iter", # iteration argname for samplers to accept
-  ignore = c()) # vector of parameters to not store post values
+  ignore = c(),         # vector of parameters to not store post values
+  asmcmc = FALSE)       # whether or not to return as mcmc from coda
 {
+  total_start_time = Sys.time()
+
   # We need init and conditional_samplers to have the same
   # names. They need not be in the same order, though
   var_names = names(init)
   stopifnot(sort(var_names) == sort(names(conditional_samplers)))
 
-  # remove vectors and replace with arrays
-  vars = lapply(init, as.array)
+  # turn matrices into vectors if one of the dimensions is unitary
+  coerce_to_vector = function(v)
+  {
+    if(!is.array(v))
+    {
+      dm = dim(v)
+      if(length(dm) == 2 && any(dm == 1))
+      {
+        return(as.vector(v))
+      }
+    }
+
+    return(v)
+  }
+  known_data = lapply(known_data, coerce_to_vector)
+  hypers = lapply(hypers, coerce_to_vector)
+  vars = lapply(init, coerce_to_vector)
 
   # allocate output
   to_keep_vars = sapply(var_names, function(vnm){ all(vnm != ignore) })
-  ret = lapply(vars[to_keep_vars], function(v){ array(dim = c(niter, dim(v))) })
+  ret = lapply(
+    vars[to_keep_vars],
+    function(v)
+    {
+      array(dim = c(niter, dim(as.array(v))))
+    })
+  run_times = numeric(length(var_names))
+  names(run_times) = var_names
 
   # for use in grab_submat
   ndims = lapply(ret, function(m){ length(dim(m)) })
@@ -77,9 +102,17 @@ gibbs <- function(
     {
       #vars[var_name] = contional_samplers[var_name](vars, known_data, iter)
       argnames = (c(vars, known_data, hypers, list(iter=iter)))[f_args[[var_name]]]
+
+      start_time <- Sys.time()
+
       vars[[var_name]] = do.call(
         conditional_samplers[[var_name]],
         argnames)
+
+      end_time <- Sys.time()
+      run_times[var_name] =
+        run_times[var_name] +
+        difftime(end_time, start_time, units = "secs")
 
       # the following line returns the following r code
       # to be evaulated in this context:
@@ -98,9 +131,21 @@ gibbs <- function(
         # evaluate in this context
         eval(set_ret_var_name_to)
       }
+
     }
   }
 
-  return(lapply(ret, as.mcmc))
+  if(asmcmc)
+  {
+    ret = lapply(ret, as.mcmc)
+  }
+
+  total_end_time = Sys.time()
+  run_times = c(
+    run_times,
+    difftime(total_end_time, total_start_time, units = "secs"))
+
+  names(run_times) = c(var_names, "total_run_time")
+  return(c(ret, run_time = list(run_times)))
 }
 

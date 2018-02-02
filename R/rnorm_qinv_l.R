@@ -3,6 +3,11 @@ rnorm_qinv_l <- function(
   Q,
   l) # sample from N(Q^{-1}l, Q^{-1})
 {
+  if(length(l) == 1)
+  {
+    Q = as.matrix(Q)
+  }
+
   # just leaving this function here for now
   chol_solve <- function(L, y)
   {

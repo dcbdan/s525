@@ -32,10 +32,12 @@ gibbs <- function(
     a function argument. For example, if the conditional sampler is only to
     perform a sample every so many iterations.}
   \item{ignore}{A vector of parameter names to not store and return.}
+  \item{asmcmc}{Whether or not to make the return value a mcmc object.}
 }
 \details{
-  This function returns a list of arrays. Each element is the set of samples
-  generated for the corresponding parameter.
+  This function returns a list of arrays where each element is the set of samples
+  generated for the corresponding parameter. In addition, the amount of running time
+  used to calculate each variable is returned.
 }
 \examples{
   # Do a gibbs sampling for an AR(1) model:
