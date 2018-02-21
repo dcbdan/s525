@@ -1,9 +1,10 @@
 rnorm_qinv_l <- function(
   n,
   Q,
-  l) # sample from N(Q^{-1}l, Q^{-1})
+  l,
+  L = NULL) # sample from N(Q^{-1}l, Q^{-1})
 {
-  if(length(l) == 1)
+  if(length(l) == 1 & is.null(L))
   {
     Q = as.matrix(Q)
   }
@@ -18,11 +19,14 @@ rnorm_qinv_l <- function(
   }
   ###############################################
 
-  p <- ncol(Q)
-  stopifnot(nrow(Q) == p)
-  stopifnot(length(l) == p)
+  if(is.null(L))
+  {
+    p <- ncol(Q)
+    stopifnot(nrow(Q) == p)
+    stopifnot(length(l) == p)
 
-  L <- t(chol(Q))
+    L <- t(chol(Q))
+  }
 
   z <- matrix(rnorm(p*n), nrow = p, ncol = n)
 

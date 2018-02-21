@@ -1,23 +1,22 @@
-\name{rnorm_qinv_l}
-\alias{rnorm_qinv_l}
+\name{rnorm_qinv_l_chol}
+\alias{rnorm_qinv_l_chol}
 \title{
   Sample from multivariate normal distribution }
 \description{
   Sample from multivariate normal distribution with
-  mean \eqn{Q^{-1}l} and covariance matrix \eqn{Q^{-1}}.
+  mean \eqn{Q^{-1}l} and covariance matrix \eqn{Q^{-1}} where
+  \eqn{Q = LL^t}.
 }
 \usage{
-rnorm_qinv_l <- function(
+rnorm_qinv_l_chol <- function(
   n,
-  Q,
-  l,
-  L)
+  L,
+  l)
 }
 \arguments{
   \item{n}{number of elements to generate}
-  \item{Q}{p by p precision matrix. }
-  \item{l}{p by 1 vector}
   \item{L}{NULL by default. If not null, Q is ignored and assumed to be LL^t.}
+  \item{l}{p by 1 vector}
 }
 \details{
 The algorithm is as follows
