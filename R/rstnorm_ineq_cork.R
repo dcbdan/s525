@@ -19,6 +19,7 @@ rstnorm_ineq_cork = function(
       return(p)
     }
 
+    print("ab--------------------------------")
     for(idx in 1:nd)
     {
       dvec = M[idx,]
@@ -43,7 +44,20 @@ rstnorm_ineq_cork = function(
       # assuming rtruncnorm is effecient
       a = max(-Inf, nvec[dless]/dvec[dless])
       b = min( Inf, nvec[dgrea]/dvec[dgrea])
-      p[idx] = rtruncnorm(1, a, b)
+
+      # a==b might happen if it is far from converging
+      # all.equal(a, b) == T is not redundant.........all.equal does
+      # not return FALSE, only TRUE...............................
+      if(is.finite(a) && is.finite(b) && (all.equal(a, b) == T))
+      {
+        p[idx] = a
+        print("equal")
+      }
+      else
+      {
+        print("n")
+        p[idx] = rtruncnorm(1, a, b)
+      }
     }
 
     return(increment(p, rep - 1))

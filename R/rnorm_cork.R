@@ -87,7 +87,7 @@ rnorm_cork = function(
     }
     else
     {
-      burn = 0
+      burn = n
     }
 
     z = t(rstnorm_ineq_cork(n, Mz, mz, burn = burn))
