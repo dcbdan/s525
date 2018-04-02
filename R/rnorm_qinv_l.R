@@ -27,10 +27,14 @@ rnorm_qinv_l <- function(
 
     L <- t(chol(Q))
   }
+  else
+  {
+    p <- ncol(L)
+  }
 
   z <- matrix(rnorm(p*n), nrow = p, ncol = n)
 
-  y <- L %*% z + l
+  y <- L %*% z + as.vector(l)
 
   if(n == 1)
   {

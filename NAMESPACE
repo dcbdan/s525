@@ -4,4 +4,5 @@ importFrom(truncdist, rtrunc)
 importFrom(coda, as.mcmc)
 importFrom(coda, HPDinterval)
 importFrom(MASS, mvrnorm)
+importFrom(MASS, ginv)
 

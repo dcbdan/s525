@@ -14,8 +14,8 @@ rplackett_luce <- function(n, vs)
   \item{vs}{k vector of probabilities; need not be scaled to sum to 1}
 }
 \details{
-  This function returns a n x k matrix where each row is a permutationn generated
-  froma plackett luce distributionn with parameters given by vs.
+  This function returns a n x k matrix where each row is a permutation generated
+  from a plackett luce distribution with parameters given by vs.
 }
 \examples{
   library(coda)
