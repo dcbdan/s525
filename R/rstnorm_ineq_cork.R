@@ -19,7 +19,6 @@ rstnorm_ineq_cork = function(
       return(p)
     }
 
-    print("ab--------------------------------")
     for(idx in 1:nd)
     {
       dvec = M[idx,]
@@ -51,11 +50,9 @@ rstnorm_ineq_cork = function(
       if(is.finite(a) && is.finite(b) && (all.equal(a, b) == T))
       {
         p[idx] = a
-        print("equal")
       }
       else
       {
-        print("n")
         p[idx] = rtruncnorm(1, a, b)
       }
     }
