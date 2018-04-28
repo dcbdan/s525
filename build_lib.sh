@@ -1,1 +1,1 @@
-R CMD INSTALL -l bld/ .
+R CMD INSTALL .
